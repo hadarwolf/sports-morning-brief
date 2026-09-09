@@ -1,0 +1,9 @@
+{
+  "football_teams": [
+    "Arsenal",
+    "Barcelona"
+  ],
+  "nba_teams": [],
+  "brief_style": "friendly and knowledgeable, like a mate who really knows football. Keep it under 200 words. Feel free to mix in a Hebrew word or two if it fits naturally.",
+  "language_hint": "English"
+}
