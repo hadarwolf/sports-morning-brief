@@ -13,11 +13,3 @@ venv/
 
 # OS
 .DS_Store
-
-# Daily Brief: raw fetches are regenerated every run (~0.5MB/day) — only
-# processed output under data/ gets committed (Phase 2+).
-data/raw/
-.pytest_cache/
-
-# Written by the daily Claude routine; only the assembled data/briefs/ is committed.
-data/inbox/drafts/
