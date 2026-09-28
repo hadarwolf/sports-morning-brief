@@ -1,0 +1,99 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #f6f4ef;
+  --fg: #1b1a17;
+  --card: #ffffff;
+  --line: #e4e0d6;
+  --muted: #6b675e;
+  --accent: #b4441f;
+  --accent-fg: #ffffff;
+  --up: #177245;
+  --down: #b3261e;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #131210;
+    --fg: #ece9e2;
+    --card: #1d1c19;
+    --line: #2f2d28;
+    --muted: #a19d93;
+    --accent: #e8794f;
+    --accent-fg: #1b1a17;
+    --up: #5cc98f;
+    --down: #f08a80;
+  }
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-fg: var(--fg);
+  --color-card: var(--card);
+  --color-line: var(--line);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-fg: var(--accent-fg);
+  --color-up: var(--up);
+  --color-down: var(--down);
+  --font-sans: var(--font-inter), var(--font-heebo), system-ui, sans-serif;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Hebrew reads better in Heebo. */
+[lang="he"] {
+  font-family: var(--font-heebo), var(--font-inter), system-ui, sans-serif;
+}
+
+/* Markdown bodies (Coffee / Deep). */
+.prose-brief {
+  font-size: 1.02rem;
+  line-height: 1.7;
+}
+.prose-brief > * + * {
+  margin-top: 0.85em;
+}
+.prose-brief h1,
+.prose-brief h2,
+.prose-brief h3 {
+  margin-top: 1.4em;
+  font-weight: 650;
+  font-size: 1.08rem;
+  line-height: 1.35;
+}
+.prose-brief ul,
+.prose-brief ol {
+  padding-inline-start: 1.25em;
+}
+.prose-brief ul {
+  list-style: disc;
+}
+.prose-brief ol {
+  list-style: decimal;
+}
+.prose-brief li + li {
+  margin-top: 0.3em;
+}
+.prose-brief strong {
+  font-weight: 650;
+}
+.prose-brief a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.prose-brief blockquote {
+  border-inline-start: 3px solid var(--line);
+  padding-inline-start: 0.9em;
+  color: var(--muted);
+}
