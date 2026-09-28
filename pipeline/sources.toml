@@ -1,0 +1,236 @@
+# Daily Brief sources. Sections: sports, geopolitics, israeli_politics, business, ideas, learn.
+# Any source can be turned off with `enabled = false`.
+#
+# RSS options: id, name, section, lang, url, max_age_hours (default 48), max_items (default 25),
+#              browser_ua (send a browser User-Agent; some publishers 403 bots).
+#
+# Several publishers (Reuters, AP) no longer publish RSS. For those we use a Google News
+# RSS search scoped to the site — same headlines, links redirect to the original article.
+
+# ---------------------------------------------------------------- API sources
+
+[football_data]
+description = "football-data.org: matches (yesterday..tomorrow), big-5 standings, Arsenal/Barça"
+# PL=Premier League, PD=La Liga, BL1=Bundesliga, SA=Serie A, FL1=Ligue 1
+standings = ["PL", "PD", "BL1", "SA", "FL1"]
+favorite_window_days = 14
+
+[football_data.favorite_teams]
+arsenal = 57
+barcelona = 81
+
+[balldontlie]
+description = "balldontlie.io: last night's NBA games + Israeli players"
+israeli_players = ["Deni Avdija", "Ben Saraf"]
+
+[thesportsdb]
+description = "TheSportsDB: Inter Miami (MLS) + Israel national team"
+
+[thesportsdb.teams]
+inter_miami = 137699
+israel_national_team = 135931
+
+[markets]
+description = "yfinance: TA-35, S&P 500, USD/ILS, Brent, BTC"
+
+[markets.tickers]
+TA35 = "TA35.TA"
+SP500 = "^GSPC"
+USDILS = "ILS=X"
+BRENT = "BZ=F"
+BTC = "BTC-USD"
+
+[wikipedia]
+description = "Wikipedia On This Day (selected events)"
+langs = ["en"]  # he.wikipedia doesn't publish this feed; Phase 2 translates
+
+# ---------------------------------------------------------------- Sports news
+
+[[rss]]
+id = "bbc_football"
+name = "BBC Sport — Football"
+section = "sports"
+lang = "en"
+url = "https://feeds.bbci.co.uk/sport/football/rss.xml"
+
+[[rss]]
+id = "espn_soccer"
+name = "ESPN FC"
+section = "sports"
+lang = "en"
+url = "https://www.espn.com/espn/rss/soccer/news"
+
+[[rss]]
+id = "espn_nba"
+name = "ESPN NBA"
+section = "sports"
+lang = "en"
+url = "https://www.espn.com/espn/rss/nba/news"
+
+[[rss]]
+id = "gnews_israeli_nba"
+name = "Google News — Deni Avdija / Ben Saraf"
+section = "sports"
+lang = "en"
+url = "https://news.google.com/rss/search?q=%22Deni+Avdija%22+OR+%22Ben+Saraf%22+when:3d&hl=en-US&gl=US&ceid=US:en"
+max_age_hours = 72
+
+[[rss]]
+id = "gnews_inter_miami"
+name = "Google News — Inter Miami"
+section = "sports"
+lang = "en"
+url = "https://news.google.com/rss/search?q=%22Inter+Miami%22+when:2d&hl=en-US&gl=US&ceid=US:en"
+
+# ---------------------------------------------------------------- Geopolitics (EN)
+
+[[rss]]
+id = "reuters_world"
+name = "Reuters — World (via Google News)"
+section = "geopolitics"
+lang = "en"
+url = "https://news.google.com/rss/search?q=site:reuters.com/world+when:1d&hl=en-US&gl=US&ceid=US:en"
+
+[[rss]]
+id = "ap_world"
+name = "AP — World (via Google News)"
+section = "geopolitics"
+lang = "en"
+url = "https://news.google.com/rss/search?q=site:apnews.com+world+when:1d&hl=en-US&gl=US&ceid=US:en"
+
+[[rss]]
+id = "bbc_world"
+name = "BBC News — World"
+section = "geopolitics"
+lang = "en"
+url = "https://feeds.bbci.co.uk/news/world/rss.xml"
+
+[[rss]]
+id = "foreign_affairs"
+name = "Foreign Affairs"
+section = "geopolitics"
+lang = "en"
+url = "https://www.foreignaffairs.com/rss.xml"
+max_age_hours = 168
+
+[[rss]]
+id = "economist_intl"
+name = "The Economist — International"
+section = "geopolitics"
+lang = "en"
+url = "https://www.economist.com/international/rss.xml"
+max_age_hours = 168
+
+# ---------------------------------------------------------------- Israeli politics (HE)
+
+[[rss]]
+id = "ynet_news"
+name = "ynet — חדשות"
+section = "israeli_politics"
+lang = "he"
+url = "https://www.ynet.co.il/Integration/StoryRss2.xml"
+
+[[rss]]
+id = "walla_politics"
+name = "וואלה! — פוליטי מדיני"
+section = "israeli_politics"
+lang = "he"
+url = "https://rss.walla.co.il/feed/2686"
+max_age_hours = 96
+
+[[rss]]
+id = "haaretz_he"
+name = "הארץ"
+section = "israeli_politics"
+lang = "he"
+url = "https://www.haaretz.co.il/srv/htz---all-articles"
+browser_ua = true
+
+[[rss]]
+id = "kan_news"
+name = "כאן חדשות (via Google News)"
+section = "israeli_politics"
+lang = "he"
+url = "https://news.google.com/rss/search?q=site:kan.org.il+when:1d&hl=he&gl=IL&ceid=IL:he"
+
+[[rss]]
+id = "times_of_israel"
+name = "The Times of Israel"
+section = "israeli_politics"
+lang = "en"
+url = "https://www.timesofisrael.com/feed/"
+
+# ---------------------------------------------------------------- Business & economics (EN)
+
+[[rss]]
+id = "ft_home"
+name = "Financial Times"
+section = "business"
+lang = "en"
+url = "https://www.ft.com/rss/home"
+
+[[rss]]
+id = "bloomberg_markets"
+name = "Bloomberg — Markets"
+section = "business"
+lang = "en"
+url = "https://feeds.bloomberg.com/markets/news.rss"
+browser_ua = true
+
+[[rss]]
+id = "wsj_markets"
+name = "WSJ — Markets"
+section = "business"
+lang = "en"
+url = "https://feeds.content.dowjones.io/public/rss/RSSMarketsMain"
+browser_ua = true
+
+[[rss]]
+id = "themarker"
+name = "TheMarker"
+section = "business"
+lang = "he"
+url = "https://www.themarker.com/srv/tm-all-articles"
+browser_ua = true
+
+# ---------------------------------------------------------------- Ideas / long reads (HE output)
+
+[[rss]]
+id = "aeon"
+name = "Aeon"
+section = "ideas"
+lang = "en"
+url = "https://aeon.co/feed.rss"
+max_age_hours = 336
+
+[[rss]]
+id = "psyche"
+name = "Psyche"
+section = "ideas"
+lang = "en"
+url = "https://psyche.co/feed"
+max_age_hours = 336
+
+[[rss]]
+id = "lesswrong_curated"
+name = "LessWrong — Curated"
+section = "ideas"
+lang = "en"
+url = "https://www.lesswrong.com/feed.xml?view=curated-rss"
+max_age_hours = 336
+
+[[rss]]
+id = "marginal_revolution"
+name = "Marginal Revolution"
+section = "ideas"
+lang = "en"
+url = "https://marginalrevolution.com/feed"
+max_age_hours = 72
+
+[[rss]]
+id = "quanta"
+name = "Quanta Magazine"
+section = "ideas"
+lang = "en"
+url = "https://www.quantamagazine.org/feed/"
+max_age_hours = 336
