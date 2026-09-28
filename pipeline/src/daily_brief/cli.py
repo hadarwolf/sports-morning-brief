@@ -1,4 +1,4 @@
-"""Command line entry point: `daily-brief fetch` / `daily-brief sources`."""
+"""Command line entry point: `daily-brief fetch | prepare | assemble | sources`."""
 
 from __future__ import annotations
 
@@ -10,6 +10,8 @@ from datetime import date, datetime
 from .config import TZ, Settings, load_sources
 from .fetchers import build_sources
 from .runner import run_sources, write_results
+from .summarize.assemble import assemble
+from .summarize.prepare import prepare
 
 
 def _select(sources, only: str | None, section: str | None):
@@ -53,6 +55,33 @@ def cmd_fetch(args) -> int:
     return 1 if args.strict and not all(r.ok for r in results) else 0
 
 
+def cmd_prepare(args) -> int:
+    settings = Settings.from_env()
+    day = date.fromisoformat(args.date) if args.date else _israel_today()
+    try:
+        meta = prepare(day, settings)
+    except FileNotFoundError as e:
+        sys.exit(str(e))
+    print(f"inbox ready for {meta['date']}: sections={', '.join(meta['sections'])}; "
+          f"essays with full text={meta['essays_fetched']}; match day={meta['match_day']['is_match_day']}")
+    if meta["skipped_sections"]:
+        print(f"skipped (no data): {', '.join(meta['skipped_sections'])}")
+    return 0
+
+
+def cmd_assemble(args) -> int:
+    rep = assemble(Settings.from_env())
+    for w in rep.warnings:
+        print(f"warning: {w}")
+    if not rep.ok:
+        print(f"{len(rep.errors)} error(s); fix the drafts and run assemble again:")
+        for e in rep.errors:
+            print(f"  - {e}")
+        return 1
+    print(f"OK: wrote {', '.join(rep.written)}")
+    return 0
+
+
 def cmd_sources(args) -> int:
     for s in build_sources(load_sources()):
         print(f"{s.section:<16} {s.kind:<4} {s.id:<24} {s.description}")
@@ -78,6 +107,13 @@ def main(argv: list[str] | None = None) -> int:
     p_fetch.add_argument("--no-write", action="store_true", help="connectivity check only")
     p_fetch.add_argument("--strict", action="store_true", help="exit 1 if any source fails")
     p_fetch.set_defaults(func=cmd_fetch)
+
+    p_prep = sub.add_parser("prepare", help="build data/inbox/ (prompts + inputs) from data/raw/<date>/")
+    p_prep.add_argument("--date", help="Israel date (YYYY-MM-DD); default today")
+    p_prep.set_defaults(func=cmd_prepare)
+
+    p_asm = sub.add_parser("assemble", help="validate data/inbox/drafts/ and publish to data/briefs/<date>/")
+    p_asm.set_defaults(func=cmd_assemble)
 
     p_sources = sub.add_parser("sources", help="list configured sources")
     p_sources.set_defaults(func=cmd_sources)

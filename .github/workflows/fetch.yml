@@ -1,0 +1,46 @@
+name: Fetch sources
+
+# Every morning: fetch all news/sports/markets sources and prepare data/inbox/ for the
+# Claude routine, which writes the brief ~90 minutes later (see ROUTINE.md).
+on:
+  schedule:
+    # 02:00 UTC = 05:00 Israel summer time / 04:00 winter time. GitHub often starts
+    # scheduled jobs late, hence the buffer before the routine at 03:30 UTC.
+    - cron: "0 2 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: fetch
+  cancel-in-progress: false
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v6
+
+      - name: Fetch sources
+        working-directory: pipeline
+        env:
+          FOOTBALL_DATA_TOKEN: ${{ secrets.FOOTBALL_DATA_TOKEN }}
+          BALLDONTLIE_TOKEN: ${{ secrets.BALLDONTLIE_TOKEN }}
+        run: uv run daily-brief fetch
+
+      - name: Prepare inbox
+        working-directory: pipeline
+        run: uv run daily-brief prepare
+
+      - name: Commit inbox
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/inbox
+          git commit -m "Inbox for $(TZ=Asia/Jerusalem date +%F)" || echo "nothing to commit"
+          git pull --rebase origin main
+          git push origin HEAD:main

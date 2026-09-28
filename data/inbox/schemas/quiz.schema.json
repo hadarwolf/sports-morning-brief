@@ -1,0 +1,97 @@
+{
+ "$defs": {
+  "QuizQuestion": {
+   "additionalProperties": false,
+   "properties": {
+    "id": {
+     "minLength": 1,
+     "title": "Id",
+     "type": "string"
+    },
+    "section": {
+     "minLength": 1,
+     "title": "Section",
+     "type": "string"
+    },
+    "story_id": {
+     "minLength": 1,
+     "title": "Story Id",
+     "type": "string"
+    },
+    "answer_index": {
+     "description": "0-based index of the correct option (same in both languages)",
+     "maximum": 3,
+     "minimum": 0,
+     "title": "Answer Index",
+     "type": "integer"
+    },
+    "en": {
+     "$ref": "#/$defs/QuizText"
+    },
+    "he": {
+     "$ref": "#/$defs/QuizText"
+    }
+   },
+   "required": [
+    "id",
+    "section",
+    "story_id",
+    "answer_index",
+    "en",
+    "he"
+   ],
+   "title": "QuizQuestion",
+   "type": "object"
+  },
+  "QuizText": {
+   "additionalProperties": false,
+   "properties": {
+    "question": {
+     "minLength": 1,
+     "title": "Question",
+     "type": "string"
+    },
+    "options": {
+     "description": "exactly 4 options",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 4,
+     "minItems": 4,
+     "title": "Options",
+     "type": "array"
+    },
+    "explanation": {
+     "description": "one sentence explaining the right answer",
+     "minLength": 1,
+     "title": "Explanation",
+     "type": "string"
+    }
+   },
+   "required": [
+    "question",
+    "options",
+    "explanation"
+   ],
+   "title": "QuizText",
+   "type": "object"
+  }
+ },
+ "additionalProperties": false,
+ "properties": {
+  "questions": {
+   "items": {
+    "$ref": "#/$defs/QuizQuestion"
+   },
+   "maxItems": 3,
+   "minItems": 3,
+   "title": "Questions",
+   "type": "array"
+  }
+ },
+ "required": [
+  "questions"
+ ],
+ "title": "QuizOutput",
+ "type": "object"
+}

@@ -18,3 +18,6 @@ venv/
 # processed output under data/ gets committed (Phase 2+).
 data/raw/
 .pytest_cache/
+
+# Written by the daily Claude routine; only the assembled data/briefs/ is committed.
+data/inbox/drafts/

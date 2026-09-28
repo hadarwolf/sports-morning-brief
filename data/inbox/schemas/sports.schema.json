@@ -1,0 +1,154 @@
+{
+ "$defs": {
+  "PlayerNote": {
+   "additionalProperties": false,
+   "properties": {
+    "name": {
+     "minLength": 1,
+     "title": "Name",
+     "type": "string"
+    },
+    "team": {
+     "minLength": 1,
+     "title": "Team",
+     "type": "string"
+    },
+    "en": {
+     "description": "1-2 sentences on the player's latest game/news, or that there is none",
+     "minLength": 1,
+     "title": "En",
+     "type": "string"
+    },
+    "he": {
+     "minLength": 1,
+     "title": "He",
+     "type": "string"
+    }
+   },
+   "required": [
+    "name",
+    "team",
+    "en",
+    "he"
+   ],
+   "title": "PlayerNote",
+   "type": "object"
+  },
+  "Story": {
+   "additionalProperties": false,
+   "properties": {
+    "id": {
+     "description": "short kebab-case slug, unique within the section",
+     "minLength": 1,
+     "title": "Id",
+     "type": "string"
+    },
+    "kind": {
+     "enum": [
+      "news",
+      "analysis",
+      "essay",
+      "concept",
+      "word",
+      "on_this_day"
+     ],
+     "title": "Kind",
+     "type": "string"
+    },
+    "en": {
+     "$ref": "#/$defs/Versions"
+    },
+    "he": {
+     "$ref": "#/$defs/Versions"
+    },
+    "source_refs": {
+     "description": "ref ids of the input items this story is based on, e.g. 'bbc_world#3'",
+     "items": {
+      "type": "string"
+     },
+     "title": "Source Refs",
+     "type": "array"
+    },
+    "tags": {
+     "description": "2-4 lowercase topic tags, e.g. 'arsenal', 'iran', 'monetary-policy'",
+     "items": {
+      "type": "string"
+     },
+     "title": "Tags",
+     "type": "array"
+    }
+   },
+   "required": [
+    "id",
+    "kind",
+    "en",
+    "he",
+    "source_refs",
+    "tags"
+   ],
+   "title": "Story",
+   "type": "object"
+  },
+  "Versions": {
+   "additionalProperties": false,
+   "description": "One story in one language, at all three reading lengths.",
+   "properties": {
+    "headline": {
+     "minLength": 1,
+     "title": "Headline",
+     "type": "string"
+    },
+    "scroll": {
+     "description": "~30-second version: one-sentence takeaway",
+     "minLength": 1,
+     "title": "Scroll",
+     "type": "string"
+    },
+    "coffee": {
+     "description": "~3-minute version: 2-3 short paragraphs",
+     "minLength": 1,
+     "title": "Coffee",
+     "type": "string"
+    },
+    "deep": {
+     "description": "~10-minute version: markdown write-up",
+     "minLength": 1,
+     "title": "Deep",
+     "type": "string"
+    }
+   },
+   "required": [
+    "headline",
+    "scroll",
+    "coffee",
+    "deep"
+   ],
+   "title": "Versions",
+   "type": "object"
+  }
+ },
+ "additionalProperties": false,
+ "properties": {
+  "stories": {
+   "items": {
+    "$ref": "#/$defs/Story"
+   },
+   "minItems": 1,
+   "title": "Stories",
+   "type": "array"
+  },
+  "israeli_players": {
+   "items": {
+    "$ref": "#/$defs/PlayerNote"
+   },
+   "title": "Israeli Players",
+   "type": "array"
+  }
+ },
+ "required": [
+  "stories",
+  "israeli_players"
+ ],
+ "title": "SportsOutput",
+ "type": "object"
+}

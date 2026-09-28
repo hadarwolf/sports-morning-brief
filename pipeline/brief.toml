@@ -1,0 +1,59 @@
+# Daily Brief — what the daily Claude routine is asked to write. Edit freely; the next
+# `daily-brief prepare` bakes these into data/inbox/.
+
+[reader]
+profile = """
+A Hebrew University student (Computer Science + Electrical Engineering), Israeli, bilingual
+Hebrew/English. Reads this brief instead of scrolling social media, so every item should
+teach something or explain why it matters. Favorite teams: Arsenal and Barcelona (always
+surfaced), Inter Miami. Follows the NBA with special interest in Israeli players
+(Deni Avdija, Ben Saraf). Interested in tech, AI, economics, geopolitics, philosophy,
+psychology and science. Wants English fluency in business and economics terminology.
+"""
+
+[lengths]
+scroll = "one sentence, at most 30 words: the takeaway, not a teaser"
+coffee = "2-3 short paragraphs, 150-250 words: what happened, why it matters, what to watch"
+deep = "600-900 words in markdown with a few ## subheadings: background, the story, second-order effects, what to watch next"
+
+# Per-section settings. default_lang is what the app shows first; both languages are
+# always generated so the per-section toggle works offline.
+[sections.sports]
+title_en = "Sports"
+title_he = "ספורט"
+default_lang = "en"
+stories = "3-5"
+
+[sections.geopolitics]
+title_en = "Geopolitics"
+title_he = "גיאופוליטיקה"
+default_lang = "en"
+stories = "1-2"
+
+[sections.israeli_politics]
+title_en = "Israeli Politics"
+title_he = "פוליטיקה ישראלית"
+default_lang = "he"
+stories = "2-3"
+
+[sections.business]
+title_en = "Business & Economics"
+title_he = "עסקים וכלכלה"
+default_lang = "en"
+stories = "1"
+
+[sections.ideas]
+title_en = "Ideas"
+title_he = "רעיונות"
+default_lang = "he"
+stories = "1"
+
+[sections.learn]
+title_en = "Learn Something Small"
+title_he = "ללמוד משהו קטן"
+default_lang = "en"
+stories = "2"
+
+# Section order in the app. On match days sports jumps to the top.
+[layout]
+order = ["geopolitics", "israeli_politics", "business", "sports", "ideas", "learn"]

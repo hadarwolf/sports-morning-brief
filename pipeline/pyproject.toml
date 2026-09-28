@@ -10,6 +10,7 @@ dependencies = [
     "python-dotenv>=1.0",
     "yfinance>=0.2.50",
     "tzdata>=2024.1",  # zoneinfo data on Windows
+    "pydantic>=2.13.5",
 ]
 
 [project.scripts]

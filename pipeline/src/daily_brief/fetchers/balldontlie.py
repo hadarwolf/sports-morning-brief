@@ -28,9 +28,13 @@ async def fetch(ctx: Context, res: SourceResult) -> None:
         return (await get(ctx.client, f"{BASE}{path}", params=params, headers=headers, retries=1, max_wait=RATE_WINDOW_S)).json()
 
     # Israel's yesterday == the US evening that just finished by ~6am Israel time.
+    # Today's slate (same request) feeds match-day mode.
     yesterday = (ctx.today - timedelta(days=1)).isoformat()
+    today = ctx.today.isoformat()
     res.data["date"] = yesterday
-    res.data["games"] = (await call("/games", {"dates[]": yesterday, "per_page": 100}))["data"]
+    games = (await call("/games", {"dates[]": [yesterday, today], "per_page": 100}))["data"]
+    res.data["games"] = [g for g in games if g["date"][:10] == yesterday]
+    res.data["games_today"] = [g for g in games if g["date"][:10] == today]
 
     players = {}
     for full_name in cfg["israeli_players"]:
